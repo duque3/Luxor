@@ -575,7 +575,7 @@ const addLevelingId = (sender) => {
 }
 //[++ Barra De Nivel ++]
 var per = '*[▒▒▒▒▒▒▒▒▒▒] 0%*'
-const per = 5000 * (Math.pow(2, getLevelingLevel(sender)) - 1)
+const peri = 5000 * (Math.pow(2, getLevelingLevel(sender)) - 1)
 const perl = peri-getLevelingXp(sender)
 const resl = Math.round(100-((perl/getLevelingXp(sender))*100))
 if (resl <= 10) {
