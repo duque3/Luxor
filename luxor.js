@@ -970,7 +970,7 @@ case prefix+ 'leave':
     if (!isGroup) return reply(mess.only.group)
     if (!isGroupAdmins) return reply(mess.only.admin)
     setTimeout( () => {
-	    FxBot.groupLeave (from) 
+	    Luxor.groupLeave (from) 
 	}, 2000)
      setTimeout( () => {
 		Luxor.updatePresence(from, Presence.composing) 
@@ -1105,7 +1105,7 @@ case prefix+ 'tomp3':
     if (!isQuotedVideo) return fakegroup('Responder a un video!')
     fakegroup(mess.wait)
     encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-    media = await FxBot.downloadAndSaveMediaMessage(encmedia)
+    media = await Luxor.downloadAndSaveMediaMessage(encmedia)
     ran = getRandom('.mp4')
     exec(`ffmpeg -i ${media} ${ran}`, (err) => {
         fs.unlinkSync(media)
@@ -1134,7 +1134,7 @@ case prefix+ 'tourl':
     if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
         ger = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
         reply('En Proceso ⌛')
-        owgi = await FxBot.downloadAndSaveMediaMessage(ger)
+        owgi = await Luxor.downloadAndSaveMediaMessage(ger)
         anu = await imgbb("0c419be2e8bfc27eff00147b0c763418", owgi)
         imurl = `${anu.display_url}`
         reply(imurl)
@@ -1257,7 +1257,7 @@ case prefix+ 'stikergif':
     if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
     F = body.slice(6)				  
     const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-    const media = await FxBot.downloadAndSaveMediaMessage(encmedia)
+    const media = await Luxor.downloadAndSaveMediaMessage(encmedia)
         ran = '666.webp'
         await ffmpeg(`./${media}`)
         .input(media)
@@ -1271,7 +1271,7 @@ case prefix+ 'stikergif':
             })
         .on('end', function () {
             console.log('Finish')
-            FxBot.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
+            Luxor.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
             fs.unlinkSync(media)
             fs.unlinkSync(ran)
             })
@@ -1280,7 +1280,7 @@ case prefix+ 'stikergif':
         .save(ran)
     } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
         const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-        const media = await FxBot.downloadAndSaveMediaMessage(encmedia)
+        const media = await Luxor.downloadAndSaveMediaMessage(encmedia)
         ran = '999.webp'
         reply(mess.wait)
         await ffmpeg(`./${media}`)
@@ -1296,7 +1296,7 @@ case prefix+ 'stikergif':
             })
         .on('end', function () {
             console.log('Finish')
-            FxBot.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
+            Luxor.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
             fs.unlinkSync(media)
             fs.unlinkSync(ran)
             })
@@ -1348,12 +1348,12 @@ case prefix+ 'unban':
 //Owner Bot
 case prefix+ 'leertodo':
     if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
-    var chats = await FxBot.chats.all()
+    var chats = await Luxor.chats.all()
     chats.map( async ({ jid }) => {
-        await FxBot.chatRead(jid)
+        await Luxor.chatRead(jid)
     })
 	var teks = `\`\`\`Fueron Leídos ${chats.length} Chats !\`\`\``
-	await FxBot.sendMessage(from, teks, text, {quoted: mek})
+	await Luxor.sendMessage(from, teks, text, {quoted: mek})
 	console.log('Fueron Leídos: ${chats.length} chats')
     break
 case prefix+ 'ping':
@@ -1434,7 +1434,7 @@ case prefix+ 'ytsearch':
 	try {
         var aramas = await yts(srch);
    	} catch {
-        return await FxBot.sendMessage(from, 'Error!', MessageType.text, dload)
+        return await Luxor.sendMessage(from, 'Error!', MessageType.text, dload)
     }
     aramat = aramas.all 
     var tbuff = await getBuffer(aramat[0].image)
@@ -1498,15 +1498,15 @@ case prefix+ 'video':
 
 //Funciones para cualquiera
 case prefix+ 'wame':
-    FxBot.updatePresence(from, Presence.composing) 
+    Luxor.updatePresence(from, Presence.composing) 
     options = {
         text: `「 *LINK WHATSAPP* 」\n\n_Solicitado por_ : *@${sender.split("@s.whatsapp.net")[0]}\n\nSu link de Whatsapp : *https://wa.me/${sender.split("@s.whatsapp.net")[0]}*\n*O ( / )*\n*https://api.whatsapp.com/send?phone=${sender.split("@")[0]}*`,
         contextInfo: { mentionedJid: [sender] }
     }
-    FxBot.sendMessage(from, options, text, { quoted: mek } )
+    Luxor.sendMessage(from, options, text, { quoted: mek } )
 	break
 case prefix+ 'creador':
-    await FxBot.sendMessage(from, {displayname: "DUDA🧙‍♂️", vcard: vcard}, MessageType.contact)
+    await Luxor.sendMessage(from, {displayname: "DUDA🧙‍♂️", vcard: vcard}, MessageType.contact)
     break
 
 //juegos
@@ -1577,7 +1577,6 @@ default:
         Luxor.sendMessage(from, none, MessageType.audio, {quoted:mek, mimetype: 'audio/mp4', ppt:true})
     }
 
-default:
     if (isGroup && isCmd && budy != undefined) {
         console.log(budy)
     } else {
