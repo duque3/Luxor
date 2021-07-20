@@ -9,4 +9,4 @@ cd Luxor
 ls
 bash install.sh
 npm install
-npm start
+>npm start
